@@ -1,7 +1,31 @@
-import { Form, useLoaderData } from "react-router-dom";
+import { Form, useLoaderData, redirect } from "react-router-dom";
+import apis from "../api";
+
+export async function actionEdit({ request, params }) {
+  const formData = await request.formData();
+  const payload = Object.fromEntries(formData);
+  payload.ingredients = [{ ingredient: payload.ingredients }];
+  payload.instructions = [{ step: payload.instructions }];
+  await apis.updateRecipeById(params.id, payload).then((res) => {
+    window.alert(`Movie updated successfully`);
+  });
+  return redirect(`/recipes/${params.id}`);
+}
+
+export async function actionCreate({ request }) {
+  const formData = await request.formData();
+  const payload = Object.fromEntries(formData);
+  payload.ingredients = [{ ingredient: payload.ingredients }];
+  payload.instructions = [{ step: payload.instructions }];
+  const newId = await apis.insertRecipe(payload).then((res) => {
+    window.alert(`New recipe has been added!`);
+    return res.data.id;
+  });
+  return redirect(`/recipes/${newId}`);
+}
 
 export default function EditRecipe() {
-  const { recipe } = useLoaderData();
+  const recipe = useLoaderData();
 
   return (
     <Form method="post" id="recipe-form">
@@ -12,7 +36,7 @@ export default function EditRecipe() {
           aria-label="Recipe name"
           type="text"
           name="name"
-          defaultValue={recipe.name}
+          defaultValue={recipe ? recipe.name : null}
         />
       </p>
       <label>
@@ -21,7 +45,7 @@ export default function EditRecipe() {
           type="text"
           name="meal"
           placeholder="Breakfast"
-          defaultValue={recipe.meal}
+          defaultValue={recipe ? recipe.meal : null}
         />
       </label>
       {/* <label>
@@ -35,8 +59,22 @@ export default function EditRecipe() {
         />
       </label> */}
       <label>
-        <span>Notes</span>
-        <textarea name="notes" defaultValue={recipe.notes} rows={6} />
+        <span>Ingredients</span>
+        <textarea
+          name="ingredients"
+          placeholder="1 onion"
+          defaultValue={recipe ? recipe.ingredients[0].ingredient : null}
+          rows={6}
+        />
+      </label>
+      <label>
+        <span>Instructions</span>
+        <textarea
+          name="instructions"
+          placeholder="Dice onion..."
+          defaultValue={recipe ? recipe.instructions[0].step : null}
+          rows={6}
+        />
       </label>
       <p>
         <button type="submit">Save</button>

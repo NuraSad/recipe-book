@@ -1,4 +1,4 @@
-import { Outlet, Link, useLoaderData, Form } from "react-router-dom";
+import { Outlet, Link, useLoaderData, Form, redirect } from "react-router-dom";
 import apis from "../api";
 
 export async function loader() {
@@ -6,11 +6,7 @@ export async function loader() {
 }
 
 export async function action() {
-  // const payload = { recipe.name, recipe.meal, }
-  // await apis.insertMovie(payload).then(res => {
-  //   window.alert(`Movie inserted successfully`)
-  //   return res
-  // })
+  return redirect("recipes/create");
 }
 
 export default function Root() {
@@ -39,7 +35,7 @@ export default function Root() {
           {recipes.length ? (
             <ul>
               {recipes.map((recipe) => (
-                <li key={recipe.id}>
+                <li key={recipe._id}>
                   <Link to={`recipes/${recipe._id}`}>
                     {recipe.name ? <>{recipe.name}</> : <i>No Name</i>}{" "}
                     {/* {recipe.favorite && <span>★</span>} */}
