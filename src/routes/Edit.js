@@ -1,4 +1,4 @@
-import { Form, useLoaderData, redirect } from "react-router-dom";
+import { Form, useLoaderData, redirect, useNavigate } from "react-router-dom";
 import apis from "../api";
 
 export async function actionEdit({ request, params }) {
@@ -7,7 +7,7 @@ export async function actionEdit({ request, params }) {
   payload.ingredients = [{ ingredient: payload.ingredients }];
   payload.instructions = [{ step: payload.instructions }];
   await apis.updateRecipeById(params.id, payload).then((res) => {
-    window.alert(`Movie updated successfully`);
+    window.alert(`Recipe updated successfully`);
   });
   return redirect(`/recipes/${params.id}`);
 }
@@ -26,6 +26,7 @@ export async function actionCreate({ request }) {
 
 export default function EditRecipe() {
   const recipe = useLoaderData();
+  const navigate = useNavigate();
 
   return (
     <Form method="post" id="recipe-form">
@@ -78,7 +79,9 @@ export default function EditRecipe() {
       </label>
       <p>
         <button type="submit">Save</button>
-        <button type="button">Cancel</button>
+        <button type="button" onClick={() => navigate(-1)}>
+          Cancel
+        </button>
       </p>
     </Form>
   );

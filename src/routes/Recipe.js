@@ -45,7 +45,7 @@ export default function Recipe() {
           </Form>
           <Form
             method="post"
-            action="destroy"
+            action="delete"
             onSubmit={(event) => {
               if (
                 !window.confirm(

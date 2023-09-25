@@ -1,8 +1,10 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import StartPage from "./routes/StartPage";
 import Root, {loader as rootLoader, action as rootAction} from "./routes/Root";
 import Recipe, {loader as recipeLoader} from "./routes/Recipe";
 import EditRecipe, {actionEdit, actionCreate}  from "./routes/Edit";
+import {actionDelete} from "./routes/Delete";
 import ErrorPage from "./components/ErrorPage";
 
 const router = createBrowserRouter([
@@ -13,6 +15,7 @@ const router = createBrowserRouter([
     loader: rootLoader,
     action: rootAction,
     children: [
+      {index: true, element: <StartPage />},
       {
         path: "recipes/:id",
         element: <Recipe />,
@@ -23,6 +26,10 @@ const router = createBrowserRouter([
         element: <EditRecipe />,
         loader: recipeLoader,
         action: actionEdit,
+      },
+      {
+        path: "recipes/:id/delete",
+        action: actionDelete,
       },
       {
         path: 'recipes/create',
