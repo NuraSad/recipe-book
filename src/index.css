@@ -272,7 +272,7 @@ i {
 
 #recipe h1:focus {
   outline: none;
-  color: hsl(224, 98%, 58%);
+  /* color: hsl(224, 98%, 58%); */
 }
 
 #recipe img {
@@ -367,8 +367,8 @@ i {
   color: inherit;
 }
 
-input:disabled {
-  border-color: #818181;
+#recipe-form input:read-only {
+  color: red;
 }
 
 #zero-state {
