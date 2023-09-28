@@ -275,16 +275,6 @@ i {
   color: hsl(224, 98%, 58%);
 }
 
-#recipe a[href*="twitter"] {
-  display: flex;
-  font-size: 1.5rem;
-  color: #3992ff;
-  text-decoration: none;
-}
-#recipe a[href*="twitter"]:hover {
-  text-decoration: underline;
-}
-
 #recipe img {
   width: 12rem;
   height: 12rem;
@@ -343,6 +333,30 @@ i {
   width: 100%;
 }
 
+#recipe ul li::marker {
+  color: #ff6f00;
+}
+
+#recipe ol {
+  list-style: none;
+  counter-reset: steps;
+}
+#recipe ol li {
+  counter-increment: steps;
+}
+#recipe ol li::before {
+  content: counter(steps);
+  margin-right: 0.5rem;
+  background: #ff6f00;
+  color: white;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  line-height: 1.2em;
+}
+
 #recipe-form p:last-child {
   display: flex;
   gap: 0.5rem;
@@ -351,6 +365,10 @@ i {
 
 #recipe-form p:last-child button[type="button"] {
   color: inherit;
+}
+
+input:disabled {
+  border-color: #818181;
 }
 
 #zero-state {
