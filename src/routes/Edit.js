@@ -112,7 +112,7 @@ export default function EditRecipe() {
           defaultValue={recipe.avatar}
         />
       </label> */}
-      <label>
+      <label id="create-items">
         <span>Ingredients</span>
         <ItemsList
           list={ingredientsList}
@@ -122,65 +122,17 @@ export default function EditRecipe() {
           addItem={addIngredient}
           onChange={changeIngredient}
         />
-        {/* {ingredientsList.length
-          ? ingredientsList.map((item, i) => {
-              return (
-                <Fragment key={`ingredient${i}`}>
-                  <textarea
-                    name={`ingredient${i}`}
-                    value={item}
-                    onChange={(e) => {
-                      ingredientsList[i] = e.target.value;
-                      setIngredientsList([...ingredientsList]);
-                    }}
-                  />
-                  <button
-                    onClick={(event) => {
-                      removeItem(event, i);
-                    }}
-                  >
-                    Remove
-                  </button>
-                </Fragment>
-              );
-            })
-          : null}
-        <textarea ref={refIngr} />
-        <button onClick={(event) => addIngredient(event)}>
-          Add ingredient
-        </button> */}
       </label>
-      <label>
+      <label id="create-items">
         <span>Instructions</span>
-        {instructionsList.length
-          ? instructionsList.map((item, i) => {
-              return (
-                <Fragment key={i}>
-                  <textarea
-                    name={`instruction${i}`}
-                    value={item}
-                    onChange={(e) => {
-                      instructionsList[i] = e.target.value;
-                      setIngredientsList([...ingredientsList]);
-                    }}
-                  />
-                  <button
-                    onClick={(event) => {
-                      event.preventDefault();
-                      instructionsList.splice(i, 1);
-                      setInstructionsList([...instructionsList]);
-                    }}
-                  >
-                    Remove
-                  </button>
-                </Fragment>
-              );
-            })
-          : null}
-        <textarea ref={refInst} />
-        <button onClick={(event) => addInstruction(event)}>
-          Add instruction
-        </button>
+        <ItemsList
+          list={instructionsList}
+          onDelete={removeInstruction}
+          type={"instruction"}
+          text={refInst}
+          addItem={addInstruction}
+          onChange={changeInstruction}
+        />
       </label>
       <p>
         <button type="submit">Save</button>
@@ -211,7 +163,7 @@ function ItemsList({ list, onDelete, type, text, addItem, onChange }) {
           })
         : null}
       <textarea ref={text} />
-      <button onClick={(event) => addItem(event)}>Add {type}</button>
+      <button onClick={(event) => addItem(event)}>{`Add ${type}`}</button>
     </>
   );
 }

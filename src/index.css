@@ -290,49 +290,6 @@ i {
   margin: 1rem 0;
 }
 
-#recipe-form {
-  display: flex;
-  max-width: 40rem;
-  flex-direction: column;
-  gap: 1rem;
-}
-#recipe-form > p:first-child {
-  margin: 0;
-  padding: 0;
-}
-#recipe-form > p:first-child > :nth-child(2) {
-  margin-right: 1rem;
-}
-#recipe-form > p:first-child,
-#recipe-form label {
-  display: flex;
-}
-#recipe-form p:first-child span,
-#recipe-form label span {
-  width: 8rem;
-}
-#recipe-form p:first-child input,
-#recipe-form label input,
-#recipe-form label textarea {
-  flex-grow: 2;
-}
-
-#recipe-form-avatar {
-  margin-right: 2rem;
-}
-
-#recipe-form-avatar img {
-  width: 12rem;
-  height: 12rem;
-  background: hsla(0, 0%, 0%, 0.2);
-  border-radius: 1rem;
-}
-
-#recipe-form-avatar input {
-  box-sizing: border-box;
-  width: 100%;
-}
-
 #recipe ul li::marker {
   color: #ff6f00;
 }
@@ -357,6 +314,64 @@ i {
   line-height: 1.2em;
 }
 
+#recipe-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 40rem;
+  gap: 1rem;
+}
+#recipe-form > p:first-child {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+#recipe-form > p:first-child > :nth-child(2) {
+  margin-right: 1rem;
+}
+
+#recipe-form p:first-child span,
+#recipe-form label span {
+  width: 8rem;
+}
+
+#recipe-form label[for="meal-select"] {
+  display: flex;
+}
+
+#recipe-form p:first-child input {
+  flex-grow: 2;
+}
+
+#meal-select {
+  flex-grow: 2;
+  /* appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit; */
+}
+
+#recipe-form-avatar {
+  margin-right: 2rem;
+}
+
+#recipe-form-avatar img {
+  width: 12rem;
+  height: 12rem;
+  background: hsla(0, 0%, 0%, 0.2);
+  border-radius: 1rem;
+}
+
+#recipe-form-avatar input {
+  box-sizing: border-box;
+  width: 100%;
+}
+
 #recipe-form p:last-child {
   display: flex;
   gap: 0.5rem;
@@ -365,6 +380,38 @@ i {
 
 #recipe-form p:last-child button[type="button"] {
   color: inherit;
+}
+
+#create-items {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr;
+  row-gap: 0.5rem;
+  grid-template-rows: auto;
+  grid-auto-rows: auto;
+}
+
+#create-items span {
+  grid-column: 1;
+}
+
+#create-items input {
+  grid-column: 2;
+}
+
+#create-items input + button:first-child {
+  grid-column: 3;
+}
+
+#create-items input + button:last-child {
+  grid-column: 4;
+}
+
+#create-items textarea {
+  grid-column: 2;
+}
+
+#create-items textarea + button {
+  grid-column: 3 / span 2;
 }
 
 #recipe-form input:read-only {
