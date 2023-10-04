@@ -6,9 +6,24 @@ import { Fragment } from "react";
 export async function actionEdit({ request, params }) {
   const formData = await request.formData();
   const payload = Object.fromEntries(formData);
-  payload.ingredients = [{ ingredient: payload.ingredients }];
-  payload.instructions = [{ step: payload.instructions }];
-  await apis.updateRecipeById(params.id, payload).then((res) => {
+  const ingredientsList = [];
+  const instructionsList = [];
+  for (let key of Object.keys(payload)) {
+    if (key.includes("ingredient")) {
+      ingredientsList.push(payload[key]);
+    }
+    if (key.includes("instruction")) {
+      instructionsList.push(payload[key]);
+    }
+  }
+  const submitForm = {
+    name: payload.name,
+    meal: payload.meal,
+    image: payload.image,
+    ingredients: ingredientsList,
+    instructions: instructionsList,
+  };
+  await apis.updateRecipeById(params.id, submitForm).then((res) => {
     window.alert(`Recipe updated successfully`);
   });
   return redirect(`/recipes/${params.id}`);
@@ -17,14 +32,29 @@ export async function actionEdit({ request, params }) {
 export async function actionCreate({ request }) {
   const formData = await request.formData();
   const payload = Object.fromEntries(formData);
-  console.log(payload);
-  // payload.ingredients = [{ ingredient: payload.ingredients }];
-  // payload.instructions = [{ step: payload.instructions }];
-  // const newId = await apis.insertRecipe(payload).then((res) => {
-  //   window.alert(`New recipe has been added!`);
-  //   return res.data.id;
-  // });
-  return redirect(`/recipes/create`);
+  const ingredientsList = [];
+  const instructionsList = [];
+  for (let key of Object.keys(payload)) {
+    if (key.includes("ingredient")) {
+      ingredientsList.push(payload[key]);
+    }
+    if (key.includes("instruction")) {
+      instructionsList.push(payload[key]);
+    }
+  }
+  const submitForm = {
+    name: payload.name,
+    meal: payload.meal,
+    image: payload.image,
+    ingredients: ingredientsList,
+    instructions: instructionsList,
+  };
+  const newId = await apis.insertRecipe(submitForm).then((res) => {
+    window.alert(`New recipe has been added!`);
+    return res.data.id;
+  });
+
+  return redirect(`/recipes/${newId}`);
 }
 
 export default function EditRecipe() {
@@ -102,16 +132,15 @@ export default function EditRecipe() {
           <option value="snack">Snack</option>
         </select>
       </label>
-      {/* <label>
-        <span>Avatar URL</span>
+      <label>
+        <span>Image URL</span>
         <input
-          placeholder="https://example.com/avatar.jpg"
-          aria-label="Avatar URL"
+          aria-label="Image URL"
           type="text"
-          name="avatar"
-          defaultValue={recipe.avatar}
+          name="image"
+          defaultValue={recipe ? recipe.image : null}
         />
-      </label> */}
+      </label>
       <label id="create-items">
         <span>Ingredients</span>
         <ItemsList

@@ -10,10 +10,9 @@ export default function Recipe() {
 
   return (
     <div id="recipe">
-      {/* maybe image later */}
-      {/* <div>
-        <img key={contact.avatar} src={contact.avatar || null} />
-      </div> */}
+      <div>
+        <img key={recipe.image} src={recipe.image || null} alt="dish" />
+      </div>
 
       <div>
         <h1>
@@ -26,7 +25,7 @@ export default function Recipe() {
         {recipe.ingredients.length && (
           <ul>
             {recipe.ingredients.map((ingredient, i) => {
-              return <li key={i}>{ingredient.ingredient}</li>;
+              return <li key={i}>{ingredient}</li>;
             })}
           </ul>
         )}
@@ -34,7 +33,7 @@ export default function Recipe() {
         {recipe.instructions.length && (
           <ol>
             {recipe.instructions.map((instruction, i) => {
-              return <li key={i}>{instruction.step}</li>;
+              return <li key={i}>{instruction}</li>;
             })}
           </ol>
         )}
