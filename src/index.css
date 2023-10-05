@@ -411,6 +411,11 @@ i {
   overflow: auto;
 }
 
+#create-items button {
+  justify-self: stretch;
+  align-self: center;
+}
+
 #create-items textarea + button:first-child {
   grid-column: 3;
 }
