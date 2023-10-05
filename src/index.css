@@ -29,6 +29,7 @@ body {
 }
 textarea,
 input,
+select,
 button {
   font-size: 1rem;
   font-family: inherit;
@@ -39,6 +40,7 @@ button {
   background-color: white;
   line-height: 1.5;
   margin: 0;
+  /* resize: vertical; */
 }
 button {
   color: #3992ff;
@@ -317,7 +319,7 @@ i {
 #recipe-form {
   display: flex;
   flex-direction: column;
-  max-width: 40rem;
+  max-width: 50rem;
   gap: 1rem;
 }
 #recipe-form > p:first-child {
@@ -336,6 +338,14 @@ i {
 
 #recipe-form label[for="meal-select"] {
   display: flex;
+}
+
+#recipe-form label[for="image-url"] {
+  display: flex;
+}
+
+#recipe-form label[for="image-url"] input {
+  flex-grow: 2;
 }
 
 #recipe-form p:first-child input {
@@ -384,7 +394,7 @@ i {
 
 #create-items {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr;
+  grid-template-columns: 8rem 2fr 1fr 1fr;
   row-gap: 0.5rem;
   grid-template-rows: auto;
   grid-auto-rows: auto;
@@ -394,27 +404,22 @@ i {
   grid-column: 1;
 }
 
-#create-items input {
+#create-items textarea {
   grid-column: 2;
+  height: fit-content;
+  max-width: 100%;
+  overflow: auto;
 }
 
-#create-items input + button:first-child {
+#create-items textarea + button:first-child {
   grid-column: 3;
 }
 
-#create-items input + button:last-child {
+#create-items textarea + button:last-child {
   grid-column: 4;
 }
 
-#create-items textarea {
-  grid-column: 2;
-}
-
-#create-items textarea + button {
-  grid-column: 3 / span 2;
-}
-
-#recipe-form input:read-only {
+#recipe-form textarea:read-only {
   color: red;
 }
 

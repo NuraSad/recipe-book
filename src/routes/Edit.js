@@ -126,13 +126,13 @@ export default function EditRecipe() {
           <option value={recipe ? recipe.meal : ""}>
             {recipe ? recipe.meal : "Choose a meal type"}
           </option>
-          <option value="breakfast">Breakfast</option>
-          <option value="lunch">Lunch</option>
-          <option value="dinner">Dinner</option>
-          <option value="snack">Snack</option>
+          <option value="Breakfast">Breakfast</option>
+          <option value="Lunch">Lunch</option>
+          <option value="Dinner">Dinner</option>
+          <option value="Snack">Snack</option>
         </select>
       </label>
-      <label>
+      <label htmlFor="image-url">
         <span>Image URL</span>
         <input
           aria-label="Image URL"
@@ -150,6 +150,7 @@ export default function EditRecipe() {
           text={refIngr}
           addItem={addIngredient}
           onChange={changeIngredient}
+          rows={1}
         />
       </label>
       <label id="create-items">
@@ -161,6 +162,7 @@ export default function EditRecipe() {
           text={refInst}
           addItem={addInstruction}
           onChange={changeInstruction}
+          rows={3}
         />
       </label>
       <p>
@@ -173,7 +175,7 @@ export default function EditRecipe() {
   );
 }
 
-function ItemsList({ list, onDelete, type, text, addItem, onChange }) {
+function ItemsList({ list, onDelete, type, text, addItem, onChange, rows }) {
   return (
     <>
       {list.length
@@ -186,25 +188,27 @@ function ItemsList({ list, onDelete, type, text, addItem, onChange }) {
                   index={i}
                   onChange={onChange}
                   type={type}
+                  rows={rows}
                 />
               </Fragment>
             );
           })
         : null}
-      <textarea ref={text} />
+      <textarea ref={text} rows={rows} />
       <button onClick={(event) => addItem(event)}>{`Add ${type}`}</button>
     </>
   );
 }
 
-function Item({ item, onDelete, index, onChange, type }) {
+function Item({ item, onDelete, index, onChange, type, rows }) {
   const [isEditing, setIsEditing] = useState(false);
   let itemContent;
   if (isEditing) {
     itemContent = (
       <>
-        <input
+        <textarea
           value={item}
+          rows={rows}
           onChange={(e) => {
             onChange(e, index);
           }}
@@ -222,7 +226,13 @@ function Item({ item, onDelete, index, onChange, type }) {
   } else {
     itemContent = (
       <>
-        <input name={`${type}${index}`} type="text" value={item} readOnly />
+        <textarea
+          name={`${type}${index}`}
+          type="text"
+          value={item}
+          rows={rows}
+          readOnly
+        />
         <button
           onClick={(e) => {
             e.preventDefault();
