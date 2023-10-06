@@ -10,17 +10,14 @@ export default function Recipe() {
 
   return (
     <div id="recipe">
-      <div>
-        <img key={recipe.image} src={recipe.image || null} alt="dish" />
-      </div>
+      <img key={recipe.image} src={recipe.image || null} alt="dish" />
+      <h1>
+        {recipe.name ? <>{recipe.name}</> : <i>No Name</i>}{" "}
+        {/* <Favorite recipe={recipe} /> */}
+      </h1>
 
-      <div>
-        <h1>
-          {recipe.name ? <>{recipe.name}</> : <i>No Name</i>}{" "}
-          {/* <Favorite recipe={recipe} /> */}
-        </h1>
-
-        {recipe.meal && <p>{recipe.meal}</p>}
+      {recipe.meal && <p>{recipe.meal}</p>}
+      <div id="ingredients-list">
         <p>Ingredients:</p>
         {recipe.ingredients.length && (
           <ul>
@@ -29,6 +26,8 @@ export default function Recipe() {
             })}
           </ul>
         )}
+      </div>
+      <div id="instructions-list">
         <p>Instructions:</p>
         {recipe.instructions.length && (
           <ol>
@@ -37,27 +36,24 @@ export default function Recipe() {
             })}
           </ol>
         )}
-
-        <div>
-          <Form action="edit">
-            <button type="submit">Edit</button>
-          </Form>
-          <Form
-            method="post"
-            action="delete"
-            onSubmit={(event) => {
-              if (
-                !window.confirm(
-                  "Please confirm you want to delete this record."
-                )
-              ) {
-                event.preventDefault();
-              }
-            }}
-          >
-            <button type="submit">Delete</button>
-          </Form>
-        </div>
+      </div>
+      <div id="buttons-field">
+        <Form action="edit">
+          <button type="submit">Edit</button>
+        </Form>
+        <Form
+          method="post"
+          action="delete"
+          onSubmit={(event) => {
+            if (
+              !window.confirm("Please confirm you want to delete this record.")
+            ) {
+              event.preventDefault();
+            }
+          }}
+        >
+          <button type="submit">Delete</button>
+        </Form>
       </div>
     </div>
   );
