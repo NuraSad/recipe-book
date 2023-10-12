@@ -247,7 +247,9 @@ function Item({ item, onDelete, index, onChange, type, rows }) {
   return (
     <>
       {itemContent}
-      <button onClick={(e) => onDelete(e, index)}>Remove</button>
+      <button id="remove-button" onClick={(e) => onDelete(e, index)}>
+        Remove
+      </button>
     </>
   );
 }

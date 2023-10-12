@@ -43,7 +43,7 @@ button {
   /* resize: vertical; */
 }
 button {
-  color: #3992ff;
+  color: #157af6;
   font-weight: 500;
 }
 
@@ -82,7 +82,8 @@ button:active {
   color: #eeb004;
 }
 
-form[action$="delete"] button {
+form[action$="delete"] button,
+#remove-button {
   color: #f44250;
 }
 
@@ -106,7 +107,7 @@ form[action$="delete"] button {
 
 #sidebar {
   width: 22rem;
-  background-color: #f7f7f7;
+  background-color: #f07167;
   border-right: solid 1px #e3e3e3;
   display: flex;
   flex-direction: column;
@@ -196,6 +197,12 @@ form[action$="delete"] button {
   color: inherit;
 }
 
+#sidebar button {
+  margin-top: 1rem;
+  color: #f07167;
+  border-radius: 8px;
+}
+
 i {
   color: #818181;
 }
@@ -232,7 +239,7 @@ i {
 }
 
 #sidebar nav a.active {
-  background: hsl(224, 98%, 58%);
+  background: #0081a7;
   color: white;
 }
 
@@ -241,6 +248,7 @@ i {
 }
 
 #detail {
+  background-color: #fdfcdc;
   flex: 1;
   padding: 2rem 4rem;
   width: 100%;
@@ -344,6 +352,9 @@ i {
 
 #recipe ol li {
   counter-increment: steps;
+  /* display: flex;
+  align-items: center;
+  justify-content: flex-start; */
 }
 
 #recipe ol li::before {
@@ -351,15 +362,16 @@ i {
   margin-right: 0.5rem;
   background: #ff6f00;
   color: white;
-  width: 1.2em;
-  height: 1.2em;
+  width: 1.2rem;
+  height: 1.2rem;
   border-radius: 50%;
   display: inline-grid;
   place-items: center;
-  line-height: 1.2em;
+  line-height: 1.2rem;
 }
 
 #buttons-field {
+  padding-left: 2rem;
   grid-area: buttons;
   display: flex;
   gap: 0.5rem;
