@@ -387,9 +387,7 @@ i {
   margin: 0;
   padding: 0;
   display: flex;
-}
-#recipe-form > p:first-child > :nth-child(2) {
-  margin-right: 1rem;
+  column-gap: 0.5rem;
 }
 
 #recipe-form p:first-child span,
@@ -399,10 +397,12 @@ i {
 
 #recipe-form label[for="meal-select"] {
   display: flex;
+  column-gap: 0.5rem;
 }
 
 #recipe-form label[for="image-url"] {
   display: flex;
+  column-gap: 0.5rem;
 }
 
 #recipe-form label[for="image-url"] input {
@@ -445,18 +445,28 @@ i {
 
 #recipe-form p:last-child {
   display: flex;
-  gap: 0.5rem;
-  margin: 0 0 0 8rem;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+#recipe-form p button {
+  width: 6rem;
+}
+
+#recipe-form p:last-child button[type="submit"] {
+  background-color: #55a630;
+  color: white;
 }
 
 #recipe-form p:last-child button[type="button"] {
-  color: inherit;
+  color: #f44250;
 }
 
 #create-items {
   display: grid;
   grid-template-columns: 8rem 2fr 1fr 1fr;
   row-gap: 0.5rem;
+  column-gap: 0.5rem;
   grid-template-rows: auto;
   grid-auto-rows: auto;
 }
@@ -481,9 +491,9 @@ i {
   grid-column: 3;
 }
 
-#create-items textarea + button:last-child {
+/* #create-items textarea + button:last-child {
   grid-column: 4;
-}
+} */
 
 #recipe-form textarea:read-only {
   color: red;

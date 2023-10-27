@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { Form, useLoaderData, redirect, useNavigate } from "react-router-dom";
 import apis from "../api";
-import { Fragment } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import ItemsList from "../components/ItemsList";
 
 export async function actionEdit({ request, params }) {
   const formData = await request.formData();
@@ -69,6 +71,7 @@ export default function EditRecipe() {
   const refInst = useRef(null);
   const refIngr = useRef(null);
 
+  // Check what this do?
   useEffect(() => {});
 
   function addIngredient(event) {
@@ -143,27 +146,31 @@ export default function EditRecipe() {
       </label>
       <label id="create-items">
         <span>Ingredients</span>
-        <ItemsList
-          list={ingredientsList}
-          onDelete={removeIngredient}
-          type={"ingredient"}
-          text={refIngr}
-          addItem={addIngredient}
-          onChange={changeIngredient}
-          rows={1}
-        />
+        <DndProvider backend={HTML5Backend}>
+          <ItemsList
+            list={ingredientsList}
+            onDelete={removeIngredient}
+            type={"ingredient"}
+            text={refIngr}
+            addItem={addIngredient}
+            onChange={changeIngredient}
+            rows={1}
+          />
+        </DndProvider>
       </label>
       <label id="create-items">
         <span>Instructions</span>
-        <ItemsList
-          list={instructionsList}
-          onDelete={removeInstruction}
-          type={"instruction"}
-          text={refInst}
-          addItem={addInstruction}
-          onChange={changeInstruction}
-          rows={3}
-        />
+        <DndProvider backend={HTML5Backend}>
+          <ItemsList
+            list={instructionsList}
+            onDelete={removeInstruction}
+            type={"instruction"}
+            text={refInst}
+            addItem={addInstruction}
+            onChange={changeInstruction}
+            rows={3}
+          />
+        </DndProvider>
       </label>
       <p>
         <button type="submit">Save</button>
@@ -172,84 +179,5 @@ export default function EditRecipe() {
         </button>
       </p>
     </Form>
-  );
-}
-
-function ItemsList({ list, onDelete, type, text, addItem, onChange, rows }) {
-  return (
-    <>
-      {list.length
-        ? list.map((item, i) => {
-            return (
-              <Fragment key={i}>
-                <Item
-                  item={item}
-                  onDelete={onDelete}
-                  index={i}
-                  onChange={onChange}
-                  type={type}
-                  rows={rows}
-                />
-              </Fragment>
-            );
-          })
-        : null}
-      <textarea ref={text} rows={rows} />
-      <button onClick={(event) => addItem(event)}>{`Add ${type}`}</button>
-    </>
-  );
-}
-
-function Item({ item, onDelete, index, onChange, type, rows }) {
-  const [isEditing, setIsEditing] = useState(false);
-  let itemContent;
-  if (isEditing) {
-    itemContent = (
-      <>
-        <textarea
-          value={item}
-          rows={rows}
-          onChange={(e) => {
-            onChange(e, index);
-          }}
-        />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setIsEditing(false);
-          }}
-        >
-          Save
-        </button>
-      </>
-    );
-  } else {
-    itemContent = (
-      <>
-        <textarea
-          name={`${type}${index}`}
-          type="text"
-          value={item}
-          rows={rows}
-          readOnly
-        />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setIsEditing(true);
-          }}
-        >
-          Edit
-        </button>
-      </>
-    );
-  }
-  return (
-    <>
-      {itemContent}
-      <button id="remove-button" onClick={(e) => onDelete(e, index)}>
-        Remove
-      </button>
-    </>
   );
 }
