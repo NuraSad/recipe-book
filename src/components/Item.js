@@ -8,18 +8,19 @@ function Item({ text, onDelete, index, onChange, moveItem, type, rows }) {
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes[type],
-    item: { index },
+    item: () => {
+      return { index };
+    },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   }));
 
-  const [, drop] = useDrop({
+  const [{ handlerId }, drop] = useDrop({
     accept: ItemTypes[type],
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
-    }),
+    collect(monitor) {
+      return { handlerId: monitor.getHandlerId() };
+    },
     hover(item, monitor) {
       if (!ref.current) {
         return;
@@ -102,7 +103,7 @@ function Item({ text, onDelete, index, onChange, moveItem, type, rows }) {
           type="text"
           value={text}
           rows={rows}
-          style={{ opacity: isDragging ? 0.5 : 1 }}
+          style={{ opacity: isDragging ? 0 : 1 }}
           readOnly
         />
         <button
@@ -117,12 +118,12 @@ function Item({ text, onDelete, index, onChange, moveItem, type, rows }) {
     );
   }
   return (
-    <>
+    <div id="item-block" ref={ref} data-handler-id={handlerId}>
       {itemContent}
       <button id="remove-button" onClick={(e) => onDelete(e, index)}>
         Remove
       </button>
-    </>
+    </div>
   );
 }
 

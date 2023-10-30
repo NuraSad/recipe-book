@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Form, useLoaderData, redirect, useNavigate } from "react-router-dom";
 import apis from "../api";
 import { DndProvider } from "react-dnd";
@@ -96,6 +96,41 @@ export default function EditRecipe() {
     instructionsList[idx] = event.target.value;
     setInstructionsList([...instructionsList]);
   }
+  const moveIngredient = useCallback((dragIndex, hoverIndex) => {
+    const dragItem = ingredientsList[dragIndex];
+
+    if (dragItem) {
+      setIngredientsList((prevState) => {
+        const coppiedStateArray = [...prevState];
+
+        // remove item by "hoverIndex" and put "dragItem" instead
+        const prevItem = coppiedStateArray.splice(hoverIndex, 1, dragItem);
+
+        // remove item by "dragIndex" and put "prevItem" instead
+        coppiedStateArray.splice(dragIndex, 1, prevItem[0]);
+
+        return coppiedStateArray;
+      });
+    }
+  }, []);
+
+  function moveInstruction(dragIndex, hoverIndex) {
+    const dragItem = instructionsList[dragIndex];
+
+    if (dragItem) {
+      setInstructionsList((prevState) => {
+        const coppiedStateArray = [...prevState];
+
+        // remove item by "hoverIndex" and put "dragItem" instead
+        const prevItem = coppiedStateArray.splice(hoverIndex, 1, dragItem);
+
+        // remove item by "dragIndex" and put "prevItem" instead
+        coppiedStateArray.splice(dragIndex, 1, prevItem[0]);
+
+        return coppiedStateArray;
+      });
+    }
+  }
 
   function removeIngredient(event, idx) {
     event.preventDefault();
@@ -149,6 +184,7 @@ export default function EditRecipe() {
         <DndProvider backend={HTML5Backend}>
           <ItemsList
             list={ingredientsList}
+            moveItem={moveIngredient}
             onDelete={removeIngredient}
             type={"ingredient"}
             text={refIngr}
@@ -163,6 +199,7 @@ export default function EditRecipe() {
         <DndProvider backend={HTML5Backend}>
           <ItemsList
             list={instructionsList}
+            moveItem={moveInstruction}
             onDelete={removeInstruction}
             type={"instruction"}
             text={refInst}

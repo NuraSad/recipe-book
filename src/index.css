@@ -491,6 +491,12 @@ i {
   grid-column: 3;
 }
 
+#item-block {
+  grid-column: 2;
+  display: flex;
+  column-gap: 0.5rem;
+}
+
 /* #create-items textarea + button:last-child {
   grid-column: 4;
 } */
