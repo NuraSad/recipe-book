@@ -1,8 +1,6 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Form, useLoaderData, redirect, useNavigate } from "react-router-dom";
 import apis from "../api";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import ItemsList from "../components/ItemsList";
 
 export async function actionEdit({ request, params }) {
@@ -96,41 +94,36 @@ export default function EditRecipe() {
     instructionsList[idx] = event.target.value;
     setInstructionsList([...instructionsList]);
   }
-  const moveIngredient = useCallback((dragIndex, hoverIndex) => {
-    const dragItem = ingredientsList[dragIndex];
+  // Make button to move instruction and ingredient
 
-    if (dragItem) {
-      setIngredientsList((prevState) => {
-        const coppiedStateArray = [...prevState];
+  // function moveIngredient(dragIndex, hoverIndex) {
+  // setIngredientsList((prevState) => {
+  //   return update(prevState, {
+  //     $splice: [
+  //       [dragIndex, 1],
+  //       [hoverIndex, 0, prevState[dragIndex]],
+  //     ],
+  //   });
+  // });
+  // }
 
-        // remove item by "hoverIndex" and put "dragItem" instead
-        const prevItem = coppiedStateArray.splice(hoverIndex, 1, dragItem);
+  // function moveInstruction(dragIndex, hoverIndex) {
+  //   const dragItem = instructionsList[dragIndex];
 
-        // remove item by "dragIndex" and put "prevItem" instead
-        coppiedStateArray.splice(dragIndex, 1, prevItem[0]);
+  //   if (dragItem) {
+  //     setInstructionsList((prevState) => {
+  //       const coppiedStateArray = [...prevState];
 
-        return coppiedStateArray;
-      });
-    }
-  }, []);
+  //       // remove item by "hoverIndex" and put "dragItem" instead
+  //       const prevItem = coppiedStateArray.splice(hoverIndex, 1, dragItem);
 
-  function moveInstruction(dragIndex, hoverIndex) {
-    const dragItem = instructionsList[dragIndex];
+  //       // remove item by "dragIndex" and put "prevItem" instead
+  //       coppiedStateArray.splice(dragIndex, 1, prevItem[0]);
 
-    if (dragItem) {
-      setInstructionsList((prevState) => {
-        const coppiedStateArray = [...prevState];
-
-        // remove item by "hoverIndex" and put "dragItem" instead
-        const prevItem = coppiedStateArray.splice(hoverIndex, 1, dragItem);
-
-        // remove item by "dragIndex" and put "prevItem" instead
-        coppiedStateArray.splice(dragIndex, 1, prevItem[0]);
-
-        return coppiedStateArray;
-      });
-    }
-  }
+  //       return coppiedStateArray;
+  //     });
+  //   }
+  // }
 
   function removeIngredient(event, idx) {
     event.preventDefault();
@@ -181,33 +174,29 @@ export default function EditRecipe() {
       </label>
       <label id="create-items">
         <span>Ingredients</span>
-        <DndProvider backend={HTML5Backend}>
-          <ItemsList
-            list={ingredientsList}
-            moveItem={moveIngredient}
-            onDelete={removeIngredient}
-            type={"ingredient"}
-            text={refIngr}
-            addItem={addIngredient}
-            onChange={changeIngredient}
-            rows={1}
-          />
-        </DndProvider>
+        <ItemsList
+          list={ingredientsList}
+          // moveItem={moveIngredient}
+          onDelete={removeIngredient}
+          type={"ingredient"}
+          text={refIngr}
+          addItem={addIngredient}
+          onChange={changeIngredient}
+          rows={1}
+        />
       </label>
       <label id="create-items">
         <span>Instructions</span>
-        <DndProvider backend={HTML5Backend}>
-          <ItemsList
-            list={instructionsList}
-            moveItem={moveInstruction}
-            onDelete={removeInstruction}
-            type={"instruction"}
-            text={refInst}
-            addItem={addInstruction}
-            onChange={changeInstruction}
-            rows={3}
-          />
-        </DndProvider>
+        <ItemsList
+          list={instructionsList}
+          // moveItem={moveInstruction}
+          onDelete={removeInstruction}
+          type={"instruction"}
+          text={refInst}
+          addItem={addInstruction}
+          onChange={changeInstruction}
+          rows={3}
+        />
       </label>
       <p>
         <button type="submit">Save</button>
