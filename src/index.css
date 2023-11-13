@@ -491,6 +491,39 @@ i {
   grid-column: 3;
 }
 
+#arrow-button-field {
+  grid-column: 1;
+  place-self: center end;
+  display: flex;
+  flex-direction: column;
+  row-gap: 3px;
+  padding-right: 0.5rem;
+}
+
+#arrow-button-up {
+  width: auto;
+  overflow: hidden;
+  padding: 4px;
+  border: solid #157af6;
+  box-shadow: none;
+  border-width: 0 3px 3px 0;
+  background: transparent;
+  display: inline-block;
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+#arrow-button-down {
+  overflow: hidden;
+  padding: 4px;
+  border: solid #157af6;
+  box-shadow: none;
+  border-width: 0 3px 3px 0;
+  background: white;
+  display: inline-block;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
 /* #create-items textarea + button:last-child {
   grid-column: 4;
 } */

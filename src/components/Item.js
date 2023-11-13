@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Item({ text, onDelete, index, onChange, type, rows }) {
+function Item({ text, onDelete, index, onChange, moveItem, type, rows, list }) {
   const [isEditing, setIsEditing] = useState(false);
 
   let itemContent;
@@ -47,6 +47,28 @@ function Item({ text, onDelete, index, onChange, type, rows }) {
   }
   return (
     <>
+      <div id="arrow-button-field">
+        {index === 0 ? null : (
+          <button
+            id="arrow-button-up"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              moveItem(index, "Up");
+            }}
+          ></button>
+        )}
+        {index === list.length - 1 ? null : (
+          <button
+            id="arrow-button-down"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              moveItem(index, "Down");
+            }}
+          ></button>
+        )}
+      </div>
       {itemContent}
       <button id="remove-button" onClick={(e) => onDelete(e, index)}>
         Remove

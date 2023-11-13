@@ -4,7 +4,7 @@ import Item from "./Item";
 
 function ItemsList({
   list,
-  // moveItem,
+  moveItem,
   onDelete,
   type,
   text,
@@ -23,8 +23,10 @@ function ItemsList({
                   onDelete={onDelete}
                   index={i}
                   onChange={onChange}
+                  moveItem={moveItem}
                   type={type}
                   rows={rows}
+                  list={list}
                 />
               </Fragment>
             );

@@ -94,36 +94,36 @@ export default function EditRecipe() {
     instructionsList[idx] = event.target.value;
     setInstructionsList([...instructionsList]);
   }
-  // Make button to move instruction and ingredient
 
-  // function moveIngredient(dragIndex, hoverIndex) {
-  // setIngredientsList((prevState) => {
-  //   return update(prevState, {
-  //     $splice: [
-  //       [dragIndex, 1],
-  //       [hoverIndex, 0, prevState[dragIndex]],
-  //     ],
-  //   });
-  // });
-  // }
+  function moveIngredient(originalIdx, direction) {
+    if (direction === "Up" && originalIdx === 0) return;
+    if (direction === "Down" && originalIdx === ingredientsList.length - 1)
+      return;
+    const ingredient = ingredientsList[originalIdx];
+    if (direction === "Up") {
+      ingredientsList.splice(originalIdx, 1);
+      ingredientsList.splice(originalIdx - 1, 0, ingredient);
+    } else {
+      ingredientsList.splice(originalIdx, 1);
+      ingredientsList.splice(originalIdx + 1, 0, ingredient);
+    }
+    setIngredientsList([...ingredientsList]);
+  }
 
-  // function moveInstruction(dragIndex, hoverIndex) {
-  //   const dragItem = instructionsList[dragIndex];
-
-  //   if (dragItem) {
-  //     setInstructionsList((prevState) => {
-  //       const coppiedStateArray = [...prevState];
-
-  //       // remove item by "hoverIndex" and put "dragItem" instead
-  //       const prevItem = coppiedStateArray.splice(hoverIndex, 1, dragItem);
-
-  //       // remove item by "dragIndex" and put "prevItem" instead
-  //       coppiedStateArray.splice(dragIndex, 1, prevItem[0]);
-
-  //       return coppiedStateArray;
-  //     });
-  //   }
-  // }
+  function moveInstruction(originalIdx, direction) {
+    if (direction === "Up" && originalIdx === 0) return;
+    if (direction === "Down" && originalIdx === instructionsList.length - 1)
+      return;
+    const instruction = instructionsList[originalIdx];
+    if (direction === "Up") {
+      instructionsList.splice(originalIdx, 1);
+      instructionsList.splice(originalIdx - 1, 0, instruction);
+    } else {
+      instructionsList.splice(originalIdx, 1);
+      instructionsList.splice(originalIdx + 1, 0, instruction);
+    }
+    setInstructionsList([...instructionsList]);
+  }
 
   function removeIngredient(event, idx) {
     event.preventDefault();
@@ -138,7 +138,7 @@ export default function EditRecipe() {
   return (
     <Form method="post" id="recipe-form">
       <p>
-        <span>Name</span>
+        <span>Name:</span>
         <input
           placeholder="Name"
           aria-label="Recipe name"
@@ -148,7 +148,7 @@ export default function EditRecipe() {
         />
       </p>
       <label htmlFor="meal-select">
-        <span>Meal</span>
+        <span>Meal:</span>
         <select
           name="meal"
           id="meal-select"
@@ -164,7 +164,7 @@ export default function EditRecipe() {
         </select>
       </label>
       <label htmlFor="image-url">
-        <span>Image URL</span>
+        <span>Image URL:</span>
         <input
           aria-label="Image URL"
           type="text"
@@ -172,11 +172,11 @@ export default function EditRecipe() {
           defaultValue={recipe ? recipe.image : null}
         />
       </label>
-      <label id="create-items">
-        <span>Ingredients</span>
+      <div id="create-items">
+        <span>Ingredients:</span>
         <ItemsList
           list={ingredientsList}
-          // moveItem={moveIngredient}
+          moveItem={moveIngredient}
           onDelete={removeIngredient}
           type={"ingredient"}
           text={refIngr}
@@ -184,12 +184,12 @@ export default function EditRecipe() {
           onChange={changeIngredient}
           rows={1}
         />
-      </label>
-      <label id="create-items">
-        <span>Instructions</span>
+      </div>
+      <div id="create-items">
+        <span>Instructions:</span>
         <ItemsList
           list={instructionsList}
-          // moveItem={moveInstruction}
+          moveItem={moveInstruction}
           onDelete={removeInstruction}
           type={"instruction"}
           text={refInst}
@@ -197,7 +197,7 @@ export default function EditRecipe() {
           onChange={changeInstruction}
           rows={3}
         />
-      </label>
+      </div>
       <p>
         <button type="submit">Save</button>
         <button type="button" onClick={() => navigate(-1)}>
