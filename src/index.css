@@ -107,6 +107,7 @@ form[action$="delete"] button,
 
 #sidebar {
   width: 22rem;
+  overflow-y: auto;
   background-color: #f07167;
   border-right: solid 1px #e3e3e3;
   display: flex;
@@ -249,6 +250,7 @@ i {
 
 #detail {
   background-color: #fdfcdc;
+  overflow-y: auto;
   flex: 1;
   padding: 2rem 4rem;
   width: 100%;
