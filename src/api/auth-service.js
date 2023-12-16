@@ -4,31 +4,25 @@ const apiAuth = axios.create({
   baseURL: "http://localhost:8000/api/auth",
 });
 
-export const userLogin = (username, password) => {
-  apiAuth
-    .post(`/signin`, {
-      username,
-      password,
-    })
-    .then((response) => {
-      if (response.data.accessToken) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-      }
+export const userLogin = async (payload) => {
+  try {
+    const response = await apiAuth.post(`/signin`, payload);
 
-      return response.data;
-    });
+    if (response.data.accessToken) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+    return response.data;
+  } catch (error) {
+    return error;
+  }
 };
 
 export const userLogout = () => {
   localStorage.removeItem("user");
 };
 
-export const userRegister = (username, email, password) => {
-  axios.post(`/signup`, {
-    username,
-    email,
-    password,
-  });
+export const userRegister = (payload) => {
+  axios.post(`/signup`, payload);
 };
 
 export const getCurrentUser = () => {

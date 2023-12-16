@@ -561,3 +561,10 @@ i {
   justify-content: center;
   width: 100%;
 }
+
+#successful-message {
+  color: green;
+}
+#error-message {
+  color: red;
+}
