@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,22 +8,24 @@ import authService from "../api/auth-service";
 
 const Login = () => {
   // check if it's better to use action from react-router
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUsername] = useState(null);
+  const [password, setPassword] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleLogin = (data) => {
-    setLoading(true);
+  const navigate = useNavigate();
 
-    const message = authService.userLogin(data);
-    console.log(message);
-    if (message.accessToken) {
-      return redirect("/");
+  const handleLogin = async (data) => {
+    setLoading(true);
+    const response = await authService.userLogin(data);
+    console.log(response);
+
+    if (response.accessToken) {
+      setLoading(false);
+      navigate(-1);
     } else {
       setLoading(false);
-      console.log(message);
-      setMessage(message);
+      setMessage(response.response.data.message);
     }
   };
 
@@ -63,8 +65,8 @@ const Login = () => {
       />
       {errors.password ? <p> {errors.password.message}</p> : null}
       <button type="submit">Login</button>
-      {loading && <span id="search-spinner"></span>}
-      {message.message && <div id="error-message">{message.message}</div>}
+      {loading && <span>Loading...</span>}
+      {message !== "" ? <div id="error-message">{message}</div> : null}
     </form>
   );
 };
