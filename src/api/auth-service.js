@@ -21,8 +21,13 @@ export const userLogout = () => {
   localStorage.removeItem("user");
 };
 
-export const userRegister = (payload) => {
-  axios.post(`/signup`, payload);
+export const userRegister = async (payload) => {
+  try {
+    const response = await apiAuth.post(`/signup`, payload);
+    return { response: response.data };
+  } catch (error) {
+    return error.response.data.message;
+  }
 };
 
 export const getCurrentUser = () => {

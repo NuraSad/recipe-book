@@ -18,7 +18,6 @@ const Login = () => {
   const handleLogin = async (data) => {
     setLoading(true);
     const response = await authService.userLogin(data);
-    console.log(response);
 
     if (response.accessToken) {
       setLoading(false);

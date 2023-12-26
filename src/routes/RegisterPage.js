@@ -1,76 +1,81 @@
 import { useState } from "react";
-import { redirect } from "react-router-dom";
-
-import RegisterForm from "../components/RegisterForm";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import authService from "../api/auth-service";
 
 const Register = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
-  const onChangeUsername = (e) => {
-    const username = e.target.value;
-    setUsername(username);
-  };
+  const navigate = useNavigate();
 
-  const onChangeEmail = (e) => {
-    const email = e.target.value;
-    setEmail(email);
-  };
-
-  const onChangePassword = (e) => {
-    const password = e.target.value;
-    setPassword(password);
-  };
-
-  const onChangeConfirmPassword = (e) => {
-    const confirmPassword = e.target.value;
-    setConfirmPassword(confirmPassword);
-  };
-
-  const handleRegister = (e) => {
-    e.preventDefault();
-
-    setMessage("");
+  const handleRegister = async (data) => {
     setSuccessful(false);
+    const response = await authService.userRegister(data);
 
-    authService.userRegister(username, email, password).then(
-      (response) => {
-        setMessage(response.data.message);
-        setSuccessful(true);
-        return redirect(`/recipes/signin`);
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
-        setMessage(resMessage);
-        setSuccessful(false);
-      }
-    );
+    if (response.response) {
+      navigate("/signin");
+    } else {
+      setSuccessful(false);
+      setMessage(response);
+    }
   };
+
+  const schema = yup.object({
+    username: yup.string().required("Username is required"),
+    email: yup.string().email("Email is invalid").required("Email is required"),
+    password: yup
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .max(30, "Password must not exceed 30 characters")
+      .required("Password is required"),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Confirm Password does not match")
+      .required("Confirm Password is required"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   return (
-    <RegisterForm
-      username={username}
-      onChangeUsername={onChangeUsername}
-      email={email}
-      onChangeEmail={onChangeEmail}
-      password={password}
-      onChangePassword={onChangePassword}
-      confirmPassword={confirmPassword}
-      onChangeConfirmPassword={onChangeConfirmPassword}
-      onSubmit={handleRegister}
-    >
+    <form onSubmit={handleSubmit(handleRegister)}>
+      <input
+        type="text"
+        name="username"
+        placeholder="Username..."
+        {...register("username")}
+      />
+      {errors.username ? <p> {errors.username.message}</p> : null}
+      <input
+        type="text"
+        name="email"
+        placeholder="Email..."
+        {...register("email")}
+      />
+      {errors.email ? <p> {errors.email.message}</p> : null}
+      <input
+        type="password"
+        name="password"
+        placeholder="Password..."
+        {...register("password")}
+      />
+      {errors.password ? <p> {errors.password.message}</p> : null}
+      <input
+        type="password"
+        placeholder="Confirm Password..."
+        {...register("confirmPassword")}
+      />
+      {errors.confirmPassword ? <p> {errors.confirmPassword.message}</p> : null}
+      <button type="submit">Register</button>
       {message && (
         <div
           id={successful ? "successful-message" : "error-message"}
@@ -79,7 +84,7 @@ const Register = () => {
           {message}
         </div>
       )}
-    </RegisterForm>
+    </form>
   );
 };
 

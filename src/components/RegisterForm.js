@@ -40,7 +40,7 @@ const RegisterForm = ({
       <input
         type="text"
         name="username"
-        value={username}
+        defaultValue={username}
         onChange={(e) => onChangeUsername(e)}
         placeholder="Username..."
         {...register("username")}
@@ -49,7 +49,7 @@ const RegisterForm = ({
       <input
         type="text"
         name="email"
-        value={email}
+        defaultValue={email}
         onChange={(e) => onChangeEmail(e)}
         placeholder="Email..."
         {...register("email")}
@@ -58,7 +58,7 @@ const RegisterForm = ({
       <input
         type="password"
         name="password"
-        value={password}
+        defaultValue={password}
         onChange={(e) => onChangePassword(e)}
         placeholder="Password..."
         {...register("password")}
@@ -67,7 +67,7 @@ const RegisterForm = ({
       <input
         type="password"
         placeholder="Confirm Password..."
-        value={confirmPassword}
+        defaultValue={confirmPassword}
         onChange={(e) => onChangeConfirmPassword(e)}
         {...register("confirmPassword")}
       />
