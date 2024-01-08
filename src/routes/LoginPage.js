@@ -1,19 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import authService from "../api/auth-service";
 
-const Login = () => {
+const Login = ({ isShowing, handleLoginButton }) => {
   // check if it's better to use action from react-router
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
-  const navigate = useNavigate();
 
   const handleLogin = async (data) => {
     setLoading(true);
@@ -21,7 +16,6 @@ const Login = () => {
 
     if (response.accessToken) {
       setLoading(false);
-      navigate(-1);
     } else {
       setLoading(false);
       setMessage(response.response.data.message);
@@ -44,12 +38,14 @@ const Login = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   return (
-    <form onSubmit={handleSubmit(handleLogin)}>
+    <form
+      className={`auth-form ${isShowing ? "active" : ""} show`}
+      onSubmit={handleSubmit(handleLoginButton)}
+    >
+      <h1>Sign In</h1>
       <input
         type="text"
         name="username"
-        value={username}
-        onChange={(e) => setUsername(e)}
         placeholder="Username..."
         {...register("username")}
       />
@@ -57,8 +53,6 @@ const Login = () => {
       <input
         type="password"
         name="password"
-        value={password}
-        onChange={(e) => setPassword(e)}
         placeholder="Password..."
         {...register("password")}
       />

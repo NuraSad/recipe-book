@@ -8,7 +8,9 @@ import {
   redirect,
 } from "react-router-dom";
 import apis from "../api";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import Login from "./LoginPage";
+import Register from "./RegisterPage";
 
 export async function loader({ request }) {
   const recipes = await apis
@@ -28,6 +30,8 @@ export async function action() {
 }
 
 export default function Root() {
+  const [showSignIn, setShowSignIn] = useState(true);
+  const [showRegister, setShowRegister] = useState(true);
   const recipes = useLoaderData().recipes;
   const q = useLoaderData().q;
   const navigation = useNavigation();
@@ -41,10 +45,35 @@ export default function Root() {
     document.getElementById("q").value = q;
   }, [q]);
 
+  function handleSignInClick(e) {
+    e.preventDefault();
+    setShowSignIn((prev) => !prev);
+  }
+
+  function handleRegisterClick(e) {
+    e.preventDefault();
+    setShowRegister((prev) => !prev);
+  }
+
+  function handleLoginButton() {
+    setShowSignIn((prev) => !prev);
+  }
+
+  function handleRegisterButton() {
+    setShowRegister((prev) => !prev);
+  }
+
   return (
     <>
       <div id="sidebar">
-        <h1>Recipe Book</h1>
+        <div id="auth-field">
+          <button id="sign-in-button" onClick={(e) => handleSignInClick(e)}>
+            Sign In
+          </button>
+          <button id="register-button" onClick={(e) => handleRegisterClick(e)}>
+            Register
+          </button>
+        </div>
         <div>
           <Form id="search-form" role="search">
             <input
@@ -89,7 +118,9 @@ export default function Root() {
             </p>
           )}
           <Form method="post">
-            <button type="submit">Add new recipe</button>
+            <button type="submit" id="new-recipe-button">
+              Add new recipe
+            </button>
           </Form>
         </nav>
       </div>
@@ -98,6 +129,11 @@ export default function Root() {
         className={navigation.state === "loading" ? "loading" : ""}
       >
         <Outlet />
+        <Login isShowing={showSignIn} handleLoginButton={handleLoginButton} />
+        <Register
+          isShowing={showRegister}
+          handleRegisterButton={handleRegisterButton}
+        />
       </div>
     </>
   );

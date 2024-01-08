@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import authService from "../api/auth-service";
 
-const Register = () => {
+const Register = ({ isShowing, handleRegisterButton }) => {
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -47,7 +47,11 @@ const Register = () => {
   });
 
   return (
-    <form onSubmit={handleSubmit(handleRegister)}>
+    <form
+      className={`auth-form ${isShowing ? "active" : ""} show`}
+      onSubmit={handleSubmit(handleRegisterButton)}
+    >
+      <h1>Register</h1>
       <input
         type="text"
         name="username"
