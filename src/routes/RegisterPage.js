@@ -47,48 +47,49 @@ const Register = ({ isShowing, handleRegisterButton }) => {
   });
 
   return (
-    <form
-      className={`auth-form ${isShowing ? "active" : ""} show`}
-      onSubmit={handleSubmit(handleRegisterButton)}
-    >
-      <h1>Register</h1>
-      <input
-        type="text"
-        name="username"
-        placeholder="Username..."
-        {...register("username")}
-      />
-      {errors.username ? <p> {errors.username.message}</p> : null}
-      <input
-        type="text"
-        name="email"
-        placeholder="Email..."
-        {...register("email")}
-      />
-      {errors.email ? <p> {errors.email.message}</p> : null}
-      <input
-        type="password"
-        name="password"
-        placeholder="Password..."
-        {...register("password")}
-      />
-      {errors.password ? <p> {errors.password.message}</p> : null}
-      <input
-        type="password"
-        placeholder="Confirm Password..."
-        {...register("confirmPassword")}
-      />
-      {errors.confirmPassword ? <p> {errors.confirmPassword.message}</p> : null}
-      <button type="submit">Register</button>
-      {message && (
-        <div
-          id={successful ? "successful-message" : "error-message"}
-          role="alert"
-        >
-          {message}
-        </div>
-      )}
-    </form>
+    <div className={`fullscreen-container ${isShowing ? "active" : ""} show`}>
+      <form className="auth-form" onSubmit={handleSubmit(handleRegisterButton)}>
+        <h1>Register</h1>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username..."
+          {...register("username")}
+        />
+        {errors.username ? <p> {errors.username.message}</p> : null}
+        <input
+          type="text"
+          name="email"
+          placeholder="Email..."
+          {...register("email")}
+        />
+        {errors.email ? <p> {errors.email.message}</p> : null}
+        <input
+          type="password"
+          name="password"
+          placeholder="Password..."
+          {...register("password")}
+        />
+        {errors.password ? <p> {errors.password.message}</p> : null}
+        <input
+          type="password"
+          placeholder="Confirm Password..."
+          {...register("confirmPassword")}
+        />
+        {errors.confirmPassword ? (
+          <p> {errors.confirmPassword.message}</p>
+        ) : null}
+        <button type="submit">Register</button>
+        {message && (
+          <div
+            id={successful ? "successful-message" : "error-message"}
+            role="alert"
+          >
+            {message}
+          </div>
+        )}
+      </form>
+    </div>
   );
 };
 

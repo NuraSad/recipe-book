@@ -38,29 +38,28 @@ const Login = ({ isShowing, handleLoginButton }) => {
   } = useForm({ resolver: yupResolver(schema) });
 
   return (
-    <form
-      className={`auth-form ${isShowing ? "active" : ""} show`}
-      onSubmit={handleSubmit(handleLoginButton)}
-    >
-      <h1>Sign In</h1>
-      <input
-        type="text"
-        name="username"
-        placeholder="Username..."
-        {...register("username")}
-      />
-      {errors.username ? <p> {errors.username.message}</p> : null}
-      <input
-        type="password"
-        name="password"
-        placeholder="Password..."
-        {...register("password")}
-      />
-      {errors.password ? <p> {errors.password.message}</p> : null}
-      <button type="submit">Login</button>
-      {loading && <span>Loading...</span>}
-      {message !== "" ? <div id="error-message">{message}</div> : null}
-    </form>
+    <div className={`fullscreen-container ${isShowing ? "active" : ""} show`}>
+      <form className="auth-form" onSubmit={handleSubmit(handleLoginButton)}>
+        <h1>Sign In</h1>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username..."
+          {...register("username")}
+        />
+        {errors.username ? <p> {errors.username.message}</p> : null}
+        <input
+          type="password"
+          name="password"
+          placeholder="Password..."
+          {...register("password")}
+        />
+        {errors.password ? <p> {errors.password.message}</p> : null}
+        <button type="submit">Login</button>
+        {loading && <span>Loading...</span>}
+        {message !== "" ? <div id="error-message">{message}</div> : null}
+      </form>
+    </div>
   );
 };
 

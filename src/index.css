@@ -562,8 +562,19 @@ i {
   color: #121212;
 }
 
+.fullscreen-container {
+  width: 100%;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(256, 256, 256, 0.5);
+  z-index: 9999;
+}
+
 .auth-form {
-  opacity: 80%;
   background: #f07167;
   padding-right: 2vw;
   padding-left: 2vw;
@@ -577,8 +588,8 @@ i {
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 25%;
-  left: 25%;
+  top: 35%;
+  left: 40%;
   margin: -25px 0 0 -25px;
 }
 
@@ -600,12 +611,12 @@ i {
   padding: 5% 10%;
 }
 
-.auth-form.show {
+.fullscreen-container.show {
   transition: 800ms;
   opacity: 1;
 }
 
-.auth-form.show.active {
+.fullscreen-container.show.active {
   transform: translateY(100px) scale(0) rotateY(180deg);
   opacity: 0;
 }
