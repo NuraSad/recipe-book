@@ -1,23 +1,23 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import authService from "../api/auth-service";
 
-const Register = ({ isShowing, handleRegisterButton }) => {
+const Register = ({ isShowing, setUser, closeWindow }) => {
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
-
-  const navigate = useNavigate();
 
   const handleRegister = async (data) => {
     setSuccessful(false);
     const response = await authService.userRegister(data);
 
     if (response.response) {
-      navigate("/signin");
+      console.log(response);
+      setUser(response.response.username);
+      reset();
+      closeWindow((prev) => !prev);
     } else {
       setSuccessful(false);
       setMessage(response);
@@ -41,6 +41,7 @@ const Register = ({ isShowing, handleRegisterButton }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -48,7 +49,7 @@ const Register = ({ isShowing, handleRegisterButton }) => {
 
   return (
     <div className={`fullscreen-container ${isShowing ? "active" : ""} show`}>
-      <form className="auth-form" onSubmit={handleSubmit(handleRegisterButton)}>
+      <form className="auth-form" onSubmit={handleSubmit(handleRegister)}>
         <h1>Register</h1>
         <input
           type="text"

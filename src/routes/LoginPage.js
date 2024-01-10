@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import authService from "../api/auth-service";
 
-const Login = ({ isShowing, handleLoginButton }) => {
+const Login = ({ isShowing, setUser, closeWindow }) => {
   // check if it's better to use action from react-router
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -16,6 +16,9 @@ const Login = ({ isShowing, handleLoginButton }) => {
 
     if (response.accessToken) {
       setLoading(false);
+      setUser(response.username);
+      reset();
+      closeWindow((prev) => !prev);
     } else {
       setLoading(false);
       setMessage(response.response.data.message);
@@ -34,12 +37,13 @@ const Login = ({ isShowing, handleLoginButton }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
   return (
     <div className={`fullscreen-container ${isShowing ? "active" : ""} show`}>
-      <form className="auth-form" onSubmit={handleSubmit(handleLoginButton)}>
+      <form className="auth-form" onSubmit={handleSubmit(handleLogin)}>
         <h1>Sign In</h1>
         <input
           type="text"

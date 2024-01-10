@@ -24,6 +24,10 @@ export const userLogout = () => {
 export const userRegister = async (payload) => {
   try {
     const response = await apiAuth.post(`/signup`, payload);
+    if (response.data.username) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+
     return { response: response.data };
   } catch (error) {
     return error.response.data.message;

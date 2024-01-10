@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Outlet,
   NavLink,
@@ -7,8 +8,9 @@ import {
   Form,
   redirect,
 } from "react-router-dom";
+
 import apis from "../api";
-import { useState, useEffect } from "react";
+import authService from "../api/auth-service";
 import Login from "./LoginPage";
 import Register from "./RegisterPage";
 
@@ -32,6 +34,7 @@ export async function action() {
 export default function Root() {
   const [showSignIn, setShowSignIn] = useState(true);
   const [showRegister, setShowRegister] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
   const recipes = useLoaderData().recipes;
   const q = useLoaderData().q;
   const navigation = useNavigation();
@@ -55,25 +58,40 @@ export default function Root() {
     setShowRegister((prev) => !prev);
   }
 
-  function handleLoginButton() {
-    setShowSignIn((prev) => !prev);
+  function handleUserLogOut() {
+    authService.userLogout();
+    setCurrentUser(null);
   }
 
-  function handleRegisterButton() {
-    setShowRegister((prev) => !prev);
-  }
+  useEffect(() => {
+    const user = authService.getCurrentUser();
+
+    if (user) {
+      setCurrentUser(user.username);
+    }
+  }, []);
 
   return (
     <>
       <div id="sidebar">
-        <div id="auth-field">
-          <button id="sign-in-button" onClick={(e) => handleSignInClick(e)}>
-            Sign In
-          </button>
-          <button id="register-button" onClick={(e) => handleRegisterClick(e)}>
-            Register
-          </button>
-        </div>
+        {!currentUser ? (
+          <div className="auth-field">
+            <button id="sign-in-button" onClick={(e) => handleSignInClick(e)}>
+              Sign In
+            </button>
+            <button
+              id="register-button"
+              onClick={(e) => handleRegisterClick(e)}
+            >
+              Register
+            </button>
+          </div>
+        ) : (
+          <div className="auth-field">
+            <p>User: {currentUser} is logged in</p>
+            <button onClick={handleUserLogOut}>Log Out</button>
+          </div>
+        )}
         <div>
           <Form id="search-form" role="search">
             <input
@@ -129,10 +147,15 @@ export default function Root() {
         className={navigation.state === "loading" ? "loading" : ""}
       >
         <Outlet />
-        <Login isShowing={showSignIn} handleLoginButton={handleLoginButton} />
+        <Login
+          isShowing={showSignIn}
+          setUser={setCurrentUser}
+          closeWindow={setShowSignIn}
+        />
         <Register
           isShowing={showRegister}
-          handleRegisterButton={handleRegisterButton}
+          setUser={setCurrentUser}
+          closeWindow={setShowRegister}
         />
       </div>
     </>
