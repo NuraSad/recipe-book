@@ -156,7 +156,7 @@ export default function Root() {
         id="detail"
         className={navigation.state === "loading" ? "loading" : ""}
       >
-        <Outlet />
+        <Outlet context={[currentUser, setCurrentUser]} />
         <Login
           isShowing={showSignIn}
           setUser={setCurrentUser}

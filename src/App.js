@@ -6,7 +6,7 @@ import Recipe, {loader as recipeLoader} from "./routes/Recipe";
 import EditRecipe, {actionEdit, actionCreate}  from "./routes/Edit";
 import {actionDelete} from "./routes/Delete";
 import ErrorPage from "./components/ErrorPage";
-import Register from "./routes/RegisterPage";
+import Profile from "./routes/ProfilePage";
 
 const router = createBrowserRouter([
   {
@@ -38,8 +38,8 @@ const router = createBrowserRouter([
         action: actionCreate,
       },
       {
-        path: "signup",
-        element: <Register/>,
+        path: "profile",
+        element: <Profile/>,
       },
     ],
   },
