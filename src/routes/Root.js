@@ -7,6 +7,7 @@ import {
   useSubmit,
   Form,
   redirect,
+  Link,
 } from "react-router-dom";
 
 import apis from "../api";
@@ -63,6 +64,8 @@ export default function Root() {
     setCurrentUser(null);
   }
 
+  function handleUserIconClick() {}
+
   useEffect(() => {
     const user = authService.getCurrentUser();
 
@@ -88,11 +91,18 @@ export default function Root() {
           </div>
         ) : (
           <div className="auth-field">
-            <p>User: {currentUser} is logged in</p>
+            <Link id="user-icon-mini" to={"profile"}>
+              <img
+                src="/user-chef.png"
+                id="user-icon-mini"
+                alt="user icon"
+                onClick={handleUserIconClick}
+              />
+            </Link>
             <button onClick={handleUserLogOut}>Log Out</button>
           </div>
         )}
-        <div>
+        <div className="search-field">
           <Form id="search-form" role="search">
             <input
               id="q"

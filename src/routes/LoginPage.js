@@ -59,7 +59,12 @@ const Login = ({ isShowing, setUser, closeWindow }) => {
           {...register("password")}
         />
         {errors.password ? <p> {errors.password.message}</p> : null}
-        <button type="submit">Login</button>
+        <div>
+          <button type="submit">Login</button>
+          <button type="button" onClick={() => closeWindow((prev) => !prev)}>
+            Cancel
+          </button>
+        </div>
         {loading && <span>Loading...</span>}
         {message !== "" ? <div id="error-message">{message}</div> : null}
       </form>

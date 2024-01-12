@@ -80,7 +80,12 @@ const Register = ({ isShowing, setUser, closeWindow }) => {
         {errors.confirmPassword ? (
           <p> {errors.confirmPassword.message}</p>
         ) : null}
-        <button type="submit">Register</button>
+        <div>
+          <button type="submit">Register</button>
+          <button type="button" onClick={() => closeWindow((prev) => !prev)}>
+            Cancel
+          </button>
+        </div>
         {message && (
           <div
             id={successful ? "successful-message" : "error-message"}
