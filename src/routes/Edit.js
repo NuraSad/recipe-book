@@ -1,5 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import { Form, useLoaderData, redirect, useNavigate } from "react-router-dom";
+import {
+  Form,
+  useLoaderData,
+  redirect,
+  useNavigate,
+  useOutletContext,
+} from "react-router-dom";
 import apis from "../api";
 import ItemsList from "../components/ItemsList";
 
@@ -22,6 +28,7 @@ export async function actionEdit({ request, params }) {
     image: payload.image,
     ingredients: ingredientsList,
     instructions: instructionsList,
+    author: payload.username,
   };
   await apis.updateRecipeById(params.id, submitForm).then((res) => {
     window.alert(`Recipe updated successfully`);
@@ -48,6 +55,7 @@ export async function actionCreate({ request }) {
     image: payload.image,
     ingredients: ingredientsList,
     instructions: instructionsList,
+    author: payload.username,
   };
   const newId = await apis.insertRecipe(submitForm).then((res) => {
     window.alert(`New recipe has been added!`);
@@ -58,6 +66,7 @@ export async function actionCreate({ request }) {
 }
 
 export default function EditRecipe() {
+  const [username] = useOutletContext();
   const recipe = useLoaderData();
   const navigate = useNavigate();
   const [ingredientsList, setIngredientsList] = useState(
@@ -137,6 +146,17 @@ export default function EditRecipe() {
 
   return (
     <Form method="post" id="recipe-form">
+      <label htmlFor="author">
+        <span>Author:</span>
+        <input
+          aria-label="Username"
+          type="text"
+          name="username"
+          defaultValue={username}
+          readOnly
+        />
+      </label>
+
       <p>
         <span>Name:</span>
         <input

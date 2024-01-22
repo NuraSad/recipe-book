@@ -15,6 +15,7 @@ export default function Recipe() {
         {recipe.name ? <>{recipe.name}</> : <i>No Name</i>}{" "}
         {/* <Favorite recipe={recipe} /> */}
       </h1>
+      <h2>Created by: {recipe.author}</h2>
 
       {recipe.meal && <p>{recipe.meal}</p>}
       <div id="ingredients-list">
