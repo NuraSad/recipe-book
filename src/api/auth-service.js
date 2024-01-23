@@ -39,7 +39,7 @@ export const getCurrentUser = () => {
     localStorage.hasOwnProperty("user") &&
     localStorage.getItem("user").length
   ) {
-    JSON.parse(localStorage.getItem("user"));
+    return JSON.parse(localStorage.getItem("user"));
   } else {
     return null;
   }
