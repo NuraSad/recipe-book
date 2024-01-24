@@ -1,4 +1,4 @@
-import { Form, useLoaderData } from "react-router-dom";
+import { Form, useLoaderData, useOutletContext } from "react-router-dom";
 import apis from "../api";
 
 export async function loader({ params }) {
@@ -7,6 +7,7 @@ export async function loader({ params }) {
 
 export default function Recipe() {
   const recipe = useLoaderData();
+  const [username] = useOutletContext();
 
   return (
     <div id="recipe">
@@ -41,24 +42,28 @@ export default function Recipe() {
           </ol>
         )}
       </div>
-      <div id="buttons-field">
-        <Form action="edit">
-          <button type="submit">Edit</button>
-        </Form>
-        <Form
-          method="post"
-          action="delete"
-          onSubmit={(event) => {
-            if (
-              !window.confirm("Please confirm you want to delete this record.")
-            ) {
-              event.preventDefault();
-            }
-          }}
-        >
-          <button type="submit">Delete</button>
-        </Form>
-      </div>
+      {recipe.author === username && (
+        <div id="buttons-field">
+          <Form action="edit">
+            <button type="submit">Edit</button>
+          </Form>
+          <Form
+            method="post"
+            action="delete"
+            onSubmit={(event) => {
+              if (
+                !window.confirm(
+                  "Please confirm you want to delete this record."
+                )
+              ) {
+                event.preventDefault();
+              }
+            }}
+          >
+            <button type="submit">Delete</button>
+          </Form>
+        </div>
+      )}
     </div>
   );
 }
