@@ -297,8 +297,7 @@ i {
     ". buttons";
 }
 
-#recipe h1 {
-  grid-area: name;
+#recipe #title-field h1 {
   align-self: start;
   font-size: 2.5rem;
   font-weight: 700;
@@ -306,14 +305,33 @@ i {
   line-height: 1.2;
 }
 
-#recipe h1 + p {
-  margin-top: 3rem;
-  grid-area: name;
+#recipe #title-field p {
   font-size: 1.2rem;
+}
+
+#recipe #title-field p + p {
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+#recipe #title-field p > span {
+  color: #f07167;
 }
 
 #recipe h1 + p + p {
   white-space: break-spaces;
+}
+
+#title-field {
+  grid-area: name;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#recipe div:second-child > p {
+  font-size: 1rem;
 }
 
 #recipe div > p {

@@ -11,13 +11,16 @@ export default function Recipe() {
   return (
     <div id="recipe">
       <img key={recipe.image} src={recipe.image || null} alt="dish" />
-      <h1>
-        {recipe.name ? <>{recipe.name}</> : <i>No Name</i>}{" "}
-        {/* <Favorite recipe={recipe} /> */}
-      </h1>
-      <h2>Created by: {recipe.author}</h2>
-
-      {recipe.meal && <p>{recipe.meal}</p>}
+      <div id="title-field">
+        <h1>
+          {recipe.name ? <>{recipe.name}</> : <i>No Name</i>}{" "}
+          {/* <Favorite recipe={recipe} /> */}
+        </h1>
+        {recipe.meal && <p>{recipe.meal}</p>}
+        <p>
+          Created by: <span>{recipe.author}</span>
+        </p>
+      </div>
       <div id="ingredients-list">
         <p>Ingredients:</p>
         {recipe.ingredients.length && (
