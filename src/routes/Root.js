@@ -91,7 +91,7 @@ export default function Root() {
           </div>
         ) : (
           <div className="auth-field">
-            <Link id="user-icon-mini" to={"profile"}>
+            <Link id="user-icon-mini" to={`profile/${currentUser}`}>
               <img
                 src="/user-chef.png"
                 id="user-icon-mini"
