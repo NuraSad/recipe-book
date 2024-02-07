@@ -10,6 +10,8 @@ export const updateRecipeById = (id, payload) =>
   api.put(`/recipes/${id}`, payload);
 export const deleteRecipeById = (id) => api.delete(`/recipes/${id}`);
 export const getRecipeById = (id) => api.get(`/recipes/${id}`);
+export const checkLikedRecipe = (id, username) =>
+  api.get(`/recipes/${id}/${username}`);
 
 const apis = {
   insertRecipe,
@@ -17,6 +19,7 @@ const apis = {
   updateRecipeById,
   deleteRecipeById,
   getRecipeById,
+  checkLikedRecipe,
 };
 
 export default apis;

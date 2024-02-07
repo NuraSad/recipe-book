@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Form, useLoaderData, useOutletContext } from "react-router-dom";
 import apis from "../api";
 
@@ -5,9 +6,20 @@ export async function loader({ params }) {
   return await apis.getRecipeById(params.id).then((recipe) => recipe.data.data);
 }
 
+// export async function action({ request }) {}
+
 export default function Recipe() {
   const recipe = useLoaderData();
   const [username] = useOutletContext();
+  const [favourite, setFavourite] = useState(false);
+  const checkFavourite = async (id, username) => {
+    const response = await apis.checkLikedRecipe(id, username);
+    setFavourite(response.data);
+  };
+
+  useEffect(() => {
+    checkFavourite(recipe.id, username);
+  }, [username]);
 
   return (
     <div id="recipe">
@@ -15,7 +27,7 @@ export default function Recipe() {
       <div id="title-field">
         <h1>
           {recipe.name ? <>{recipe.name}</> : <i>No Name</i>}{" "}
-          {/* <Favorite recipe={recipe} /> */}
+          <Favorite favourite={favourite} />
         </h1>
         {recipe.meal && <p>{recipe.meal}</p>}
         <p>
@@ -68,17 +80,16 @@ export default function Recipe() {
   );
 }
 
-// function Favorite({ recipe }) {
-//   // yes, this is a `let` for later
-//   let favorite = recipe.favorite;
-//   return (
-//     <Form method="post">
-//       <button
-//         name="favorite"
-//         value={favorite ? "false" : "true"}
-//         aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
-//       >
-//         {favorite ? "★" : "☆"}
-//       </button>
-//     </Form>
-//   );
+function Favorite({ favourite }) {
+  return (
+    <Form method="post">
+      <button
+        name="favorite"
+        value={favourite ? "false" : "true"}
+        aria-label={favourite ? "Remove from favourite" : "Add to favourite"}
+      >
+        {favourite ? "♥" : "♡"}
+      </button>
+    </Form>
+  );
+}

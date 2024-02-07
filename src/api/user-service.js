@@ -5,5 +5,10 @@ const api = axios.create({
 });
 
 export const getUserProfile = (username) => api.get(`/${username}`);
+// export const addFavourite = ()
 
-export default getUserProfile;
+const userInteractions = {
+  getUserProfile,
+};
+
+export default userInteractions;

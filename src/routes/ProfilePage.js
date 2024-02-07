@@ -1,10 +1,10 @@
 import { useLoaderData, useOutletContext, Link } from "react-router-dom";
-import getUserProfile from "../api/user-service";
+import userInteractions from "../api/user-service";
 
 export async function loader({ params }) {
-  return await getUserProfile(params.username).then(
-    (profile) => profile.data.data
-  );
+  return await userInteractions
+    .getUserProfile(params.username)
+    .then((profile) => profile.data.data);
 }
 
 export default function Profile() {
