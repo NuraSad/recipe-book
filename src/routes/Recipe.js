@@ -6,20 +6,23 @@ export async function loader({ params }) {
   return await apis.getRecipeById(params.id).then((recipe) => recipe.data.data);
 }
 
-// export async function action({ request }) {}
-
 export default function Recipe() {
+  const checkFavourite = async (id, username) => {
+    const response = await apis.checkLikedRecipe(id, username);
+    if (response) {
+      setFavourite(response.data);
+    }
+  };
+
   const recipe = useLoaderData();
   const [username] = useOutletContext();
   const [favourite, setFavourite] = useState(false);
-  const checkFavourite = async (id, username) => {
-    const response = await apis.checkLikedRecipe(id, username);
-    setFavourite(response.data);
-  };
 
   useEffect(() => {
-    checkFavourite(recipe.id, username);
-  }, [username]);
+    if (recipe && username) {
+      checkFavourite(recipe._id, username);
+    }
+  }, [recipe, username]);
 
   return (
     <div id="recipe">
@@ -27,7 +30,14 @@ export default function Recipe() {
       <div id="title-field">
         <h1>
           {recipe.name ? <>{recipe.name}</> : <i>No Name</i>}{" "}
-          <Favorite favourite={favourite} />
+          {username && (
+            <Favorite
+              favourite={favourite}
+              setFavourite={setFavourite}
+              username={username}
+              recipe={recipe}
+            />
+          )}
         </h1>
         {recipe.meal && <p>{recipe.meal}</p>}
         <p>
@@ -80,16 +90,23 @@ export default function Recipe() {
   );
 }
 
-function Favorite({ favourite }) {
+function Favorite({ favourite, setFavourite, username, recipe }) {
+  async function handleRecipeLike() {
+    const response = await apis.addOrRemoveFavouriteRecipe(
+      recipe._id,
+      username
+    );
+    if (response.data.success) {
+      window.alert(`${response.data.message}`);
+      setFavourite((prev) => !prev);
+    } else {
+      window.alert(`${response.data.message}`);
+    }
+  }
+
   return (
-    <Form method="post">
-      <button
-        name="favorite"
-        value={favourite ? "false" : "true"}
-        aria-label={favourite ? "Remove from favourite" : "Add to favourite"}
-      >
-        {favourite ? "♥" : "♡"}
-      </button>
-    </Form>
+    <button type="button" onClick={handleRecipeLike}>
+      {favourite ? "♥" : "♡"}
+    </button>
   );
 }
