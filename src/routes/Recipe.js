@@ -30,7 +30,7 @@ export default function Recipe() {
       <div id="title-field">
         <h1>
           {recipe.name ? <>{recipe.name}</> : <i>No Name</i>}{" "}
-          {username && (
+          {username && recipe.author !== username && (
             <Favorite
               favourite={favourite}
               setFavourite={setFavourite}
