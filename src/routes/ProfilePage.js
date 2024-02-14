@@ -9,7 +9,7 @@ export async function loader({ params }) {
 
 export default function Profile() {
   const { created, favourite } = useLoaderData();
-  const [username, setUsername] = useOutletContext();
+  const [username] = useOutletContext();
 
   return (
     <div id="profile field">
@@ -18,6 +18,23 @@ export default function Profile() {
         <ul>
           <span>Your created recipes:</span>
           {created.map((recipe) => (
+            <li key={recipe._id}>
+              {/* Link to without goes to the relative path, whereas with / find route relative to root path /  */}
+              <Link to={`/recipes/${recipe._id}`}>
+                {recipe.name ? <>{recipe.name}</> : <i>No Name</i>}{" "}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>
+          <i>No recipes</i>
+        </p>
+      )}
+      {favourite.length ? (
+        <ul>
+          <span>Your liked recipes:</span>
+          {favourite.map((recipe) => (
             <li key={recipe._id}>
               {/* Link to without goes to the relative path, whereas with / find route relative to root path /  */}
               <Link to={`/recipes/${recipe._id}`}>
