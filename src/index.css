@@ -720,6 +720,7 @@ i {
 
 .profile-column li {
   position: relative;
+  display: flex;
   text-align: center;
   width: 100%;
   background-color: #f07167;
@@ -734,6 +735,7 @@ i {
 
 .profile-column li a {
   color: inherit;
+  width: 100%;
   text-decoration: none;
 }
 
