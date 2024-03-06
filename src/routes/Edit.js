@@ -157,7 +157,7 @@ export default function EditRecipe() {
         />
       </label>
 
-      <p>
+      <label htmlFor="name">
         <span>Name:</span>
         <input
           placeholder="Name"
@@ -166,7 +166,7 @@ export default function EditRecipe() {
           name="name"
           defaultValue={recipe ? recipe.name : null}
         />
-      </p>
+      </label>
       <label htmlFor="meal-select">
         <span>Meal:</span>
         <select
