@@ -28,8 +28,8 @@ export default function Recipe() {
     <div id="recipe">
       <img key={recipe.image} src={recipe.image || null} alt="dish" />
       <div id="title-field">
-        <h1>
-          {recipe.name ? <>{recipe.name}</> : <i>No Name</i>}{" "}
+        <div id="dish-name-field">
+          <h1>{recipe.name ? <>{recipe.name}</> : <i>No Name</i>} </h1>
           {username && recipe.author !== username && (
             <Favorite
               favourite={favourite}
@@ -38,7 +38,7 @@ export default function Recipe() {
               recipe={recipe}
             />
           )}
-        </h1>
+        </div>
         {recipe.meal && <p>{recipe.meal}</p>}
         <p>
           Created by: <span>{recipe.author}</span>
@@ -105,7 +105,7 @@ function Favorite({ favourite, setFavourite, username, recipe }) {
   }
 
   return (
-    <button type="button" onClick={handleRecipeLike}>
+    <button type="button" onClick={handleRecipeLike} id="like-button">
       {favourite ? "♥" : "♡"}
     </button>
   );

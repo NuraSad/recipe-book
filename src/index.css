@@ -59,9 +59,9 @@ button:active {
 }
 
 #recipe h1 {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
+  display: inline-block;
+  overflow-wrap: break-word;
+  max-width: 70%;
 }
 #recipe h1 form {
   display: flex;
@@ -286,11 +286,11 @@ i {
 }
 
 #recipe {
-  max-width: 45rem;
+  max-width: 50rem;
   display: grid;
   grid-template-columns: 13rem 1fr;
   grid-template-rows: 13rem auto 1fr;
-  gap: 1.5rem;
+  gap: 3rem 1.5rem;
   grid-template-areas:
     "image name"
     "ingredients instructions"
@@ -323,11 +323,28 @@ i {
 }
 
 #title-field {
+  max-width: 40rem;
   grid-area: name;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
+}
+
+#title-field #dish-name-field {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+#dish-name-field #like-button {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  font-size: 1.5rem;
+  margin-left: 0.8rem;
 }
 
 #recipe div:second-child > p {
@@ -337,6 +354,7 @@ i {
 #recipe div > p {
   font-size: 1.5rem;
   font-weight: 500;
+  margin: 0;
 }
 
 #recipe h1:focus {
@@ -366,7 +384,7 @@ i {
   flex-direction: column;
   /* align-items: center;
   align-content: stretch; */
-  padding-left: 2rem;
+  padding-left: 4rem;
 }
 
 #instruction-list p {
@@ -414,10 +432,13 @@ i {
 }
 
 #buttons-field {
-  padding-left: 2rem;
+  padding-left: 4.5rem;
   grid-area: buttons;
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
+}
+#buttons-field button {
+  width: 5rem;
 }
 
 #recipe-form {
