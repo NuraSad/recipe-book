@@ -21,6 +21,7 @@ The Recipe Book application utilizes the following technologies:
 
 * **Recipe Management:** Registered users can create, update, and delete their own recipes through a user-friendly edit form.
 * **User Authentication:** Users can register accounts and log in securely using JWT Tokens.
+* **Add image:** Users can add URL to the trird-party website that hosts their image of dish or similar to it. 
 * **Favorite Recipes:** Users can add recipes created by others to their favorites for easy access.
 * **Seacrh functionality:** Users can search for recipes by dish name, making it easy to find specific recipes.
 
@@ -28,10 +29,14 @@ The Recipe Book application utilizes the following technologies:
 
 ## Purpose
 
-I created this project during my learning of HTML5 Canvas. Initially, it consisted solely of a canvas element on a white background, with a snake moving inside a rectangular box. As development progressed, I decided to enhance its visual appeal by adding a background image to simulate an old arcade gaming station. Additionally, being a passionate gamer myself, I incorporated ambient soundtracks and sound effects to infuse the game with more fun and excitement.
+The idea for this project came to me when I realized that I needed a place to store all the recipes I found online. While there are apps available that offer such functionality, I found that I wasn't satisfied with their recipe creation forms. They all had strict rules about how recipes should be organized in order to be added. So, I decided to create my own recipe book. It has a user-friendly edit form that doesn't require users to follow strict rules about how to create their recipe. Additionally, users can upload the URL to an image of their dish or simply select a stock image of the prepared recipe. This web app utilizes client-side routing, implemented with react-router, allowing users to seamlessly transition between pages. Users can also like recipes from others, and these liked recipes will be displayed on their individual profile page.
 
 
-## Lessons Learned
-  During the course of working on this project, I acquired a deeper understanding of HTML Canvas functionality. Exploring the principles behind snake game programming and mechanics proved to be particularly intriguing, providing me with valuable insights into game development.
+## Current Status
 
-Moreover, it was my first encounter with utilizing an image as a background for an entire page, which necessitated learning how to configure it for responsiveness. This aspect added a layer of complexity to the project, but it also expanded my skills in web design and layout optimization.
+The current status of the project is in development. However, two significant security issues have been identified in the web application:
+
+1. The authentication system utilizes local storage, which can be easily manipulated by anyone, potentially granting unauthorized access to the backend server. A solution to this issue would involve revamping the entire system to use session cookies or integrating a third-party authentication provider.
+
+2. The insertion of URLs for images does not include validation to verify the legitimacy of the inserted link. This leaves the application vulnerable to malicious JavaScript code injection, which could potentially compromise the security of the entire app. To address this issue, I am currently developing a server where users can upload images directly, and the server will store these images in a third-party cloud provider.
+  
