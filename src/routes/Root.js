@@ -147,9 +147,11 @@ export default function Root() {
           )}
           <Form method="post">
             {/* uses action of this component to redirect to /recipes/edit path with Edit component */}
-            <button type="submit" id="new-recipe-button">
-              Add new recipe
-            </button>
+            {currentUser ? (
+              <button type="submit" id="new-recipe-button">
+                Add new recipe
+              </button>
+            ) : null}
           </Form>
         </nav>
       </div>
