@@ -24,7 +24,12 @@ export async function loader({ request }) {
   if (q == null) {
     return { recipes, q };
   } else {
-    return { recipes: recipes.filter((recipe) => recipe.name.includes(q)), q };
+    return {
+      recipes: recipes.filter((recipe) =>
+        recipe.name.toLowerCase().includes(q.toLowerCase())
+      ),
+      q,
+    };
   }
 }
 
